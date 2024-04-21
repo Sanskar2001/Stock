@@ -8,8 +8,8 @@ const StockComponent = ({ name, price, change, onClick = () => {} }) => {
       style={{
         display: "flex",
         flexDirection: "row",
-        width: "100%",
-        marginStart: "15%",
+        width: "80%",
+        padding: 10,
         borderBottomWidth: 0.5,
       }}
       onPress={() => {

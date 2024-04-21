@@ -19,7 +19,12 @@ const stockSlice = createSlice({
       });
     },
     deleteStock: (state, action) => {
-      state.tasks = state.tasks.filter((stock) => stock.id !== action.payload);
+      console.log("deleting");
+      state.addedStocks = state.addedStocks.filter(
+        (stock) => stock.id !== action.payload
+      );
+
+      console.log(state);
     },
   },
 });
