@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const StockComponent = ({ name, price, change }) => {
+const StockComponent = ({ name, price, change, onClick = () => {} }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
@@ -13,11 +13,7 @@ const StockComponent = ({ name, price, change }) => {
         borderBottomWidth: 0.5,
       }}
       onPress={() => {
-        navigation.navigate("Details", {
-          name: name,
-          price: price,
-          change: change,
-        });
+        onClick();
       }}
     >
       <Image

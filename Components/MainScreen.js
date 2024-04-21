@@ -1,5 +1,6 @@
 import { React, useState, useRef, useEffect } from "react";
 import StockComponent from "./StockComponent";
+import { useNavigation } from "@react-navigation/native";
 import ShimmerUi from "./ShimmerUi";
 import {
   View,
@@ -46,6 +47,7 @@ const stockDatas = [
 ];
 
 export const MainScreen = () => {
+  const navigation = useNavigation();
   const { height: screenHeight } = Dimensions.get("window");
   const [isFullScreen, setIsFullScreen] = useState(false);
   const pan = useRef(new Animated.ValueXY()).current;
@@ -64,11 +66,11 @@ export const MainScreen = () => {
     };
 
     try {
-      const response = await fetch(url, options);
-      const result = await response.json();
-      console.log(result.data.trends);
-      const arr = result.data.trends.slice(0, 5);
-      setFileteredStockData(arr);
+      // const response = await fetch(url, options);
+      // const result = await response.json();
+      // console.log(result.data.trends);
+      // const arr = result.data.trends.slice(0, 5);
+      setFileteredStockData(stockDatas);
     } catch (error) {
       console.error(error);
     }
@@ -165,7 +167,17 @@ export const MainScreen = () => {
 
       {filteredStockData.length > 0
         ? filteredStockData.map((item, idx) => (
-            <StockComponent key={idx} {...item} />
+            <StockComponent
+              key={idx}
+              {...item}
+              onClick={() => {
+                navigation.navigate("Details", {
+                  name: item.name,
+                  price: item.price,
+                  change: item.change,
+                });
+              }}
+            />
           ))
         : Array(5)
             .fill(0)

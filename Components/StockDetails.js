@@ -1,9 +1,27 @@
 import { View, Text, Image, TouchableOpacity, Button } from "react-native";
 import { useRoute } from "@react-navigation/native";
-
+import { useSelector, useDispatch } from "react-redux";
+import { addStock } from "../Redux/StockReducer";
+import { useNavigation } from "@react-navigation/native";
 const StockDetails = () => {
+  const tasks = useSelector((state) => state.stocks.addedStocks);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const route = useRoute();
   const { name, price, change } = route.params;
+  const handleAdd = (id) => {
+    console.log("clicked" + id);
+    dispatch(
+      addStock({
+        name: name,
+        price: parseFloat(price).toFixed(2),
+        change: parseFloat(change).toFixed(2),
+      })
+    );
+    console.log(tasks);
+    navigation.navigate("Open Orders");
+  };
+
   console.log("Stock detail rendered " + name);
   return (
     <View
@@ -45,7 +63,13 @@ const StockDetails = () => {
             marginTop: "5%",
           }}
         >
-          <Button color={"#A67C00"} title="Add to Order" />
+          <Button
+            color={"#A67C00"}
+            title="Add to Order"
+            onPress={() => {
+              handleAdd(1);
+            }}
+          />
         </View>
       </View>
     </View>
